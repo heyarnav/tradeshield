@@ -134,7 +134,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen items-center justify-center">
         <div className="flex items-center gap-3 text-sm text-mute">
           <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand/30 border-t-brand" />
-          Loading TradeShield>>
+          Loading TradeShield...
         </div>
       </div>
     );

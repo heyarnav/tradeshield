@@ -73,7 +73,7 @@ export default function LoginPage() {
           {error && <ErrorNote message={error.message} />}
 
           <button type="submit" className="btn-primary w-full" disabled={busy}>
-            {busy ? "Signing in>>" : "Sign in"}
+            {busy ? "Signing in..." : "Sign in"}
           </button>
         </form>
 

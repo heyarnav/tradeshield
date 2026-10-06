@@ -259,7 +259,7 @@ export default function OrdersPage() {
       <Modal
         open={detail !== null || detailLoading}
         title="Order detail"
-        subtitle={detail ? `${detail.order.symbol} * ${detail.order.side} ${detail.order.order_type}` : "Loading>>"}
+        subtitle={detail ? `${detail.order.symbol} * ${detail.order.side} ${detail.order.order_type}` : "Loading..."}
         onClose={() => setDetail(null)}
         width="max-w-2xl"
       >

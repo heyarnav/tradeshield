@@ -159,7 +159,7 @@ function ThreatsContent() {
       header: "Value",
       render: (row) => (
         <span className="num text-xs" title={row.value}>
-          {row.value.length > 34 ? `${row.value.slice(0, 34)}>>` : row.value}
+          {row.value.length > 34 ? `${row.value.slice(0, 34)}...` : row.value}
         </span>
       ),
     },
@@ -277,7 +277,7 @@ function ThreatsContent() {
             <div className="w-full sm:w-72">
               <input
                 className="input"
-                placeholder="Search value, category or source>>"
+                placeholder="Search value, category or source..."
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
@@ -318,7 +318,7 @@ function ThreatsContent() {
               className="btn-primary"
               disabled={busy || !form.value.trim()}
             >
-              {busy ? "Saving>>" : "Create indicator"}
+              {busy ? "Saving..." : "Create indicator"}
             </button>
           </>
         }
@@ -377,7 +377,7 @@ function ThreatsContent() {
           </Field>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field label="Threat source" hint="Leave blank to use "Manual Entry"">
+            <Field label="Threat source" hint="Leave blank to use 'Manual Entry'">
               <input
                 className="input"
                 value={form.source_name}
@@ -424,7 +424,7 @@ function ThreatsContent() {
               className="btn-primary"
               disabled={busy}
             >
-              {busy ? "Saving>>" : "Save changes"}
+              {busy ? "Saving..." : "Save changes"}
             </button>
           </>
         }

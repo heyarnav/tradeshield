@@ -132,12 +132,12 @@ export function OrderTicket({ open, onClose, onPlaced, initialSymbol, initialSid
             onClick={submit}
             disabled={submitting || !clientValid || !instrument}
           >
-            {submitting ? "Submitting>>" : `${side} ${symbol}`}
+            {submitting ? "Submitting..." : `${side} ${symbol}`}
           </button>
         </>
       }
     >
-      {instruments.loading && <Spinner label="Loading instruments>>" />}
+      {instruments.loading && <Spinner label="Loading instruments..." />}
 
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
@@ -273,7 +273,7 @@ export function OrderTicket({ open, onClose, onPlaced, initialSymbol, initialSid
             <Field label="Referrer URL" hint="optional">
               <input
                 className="input"
-                placeholder="http://>>"
+                placeholder="http://..."
                 value={referrerUrl}
                 onChange={(event) => setReferrerUrl(event.target.value)}
               />

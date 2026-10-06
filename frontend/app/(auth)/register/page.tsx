@@ -80,7 +80,7 @@ export default function RegisterPage() {
           {error && <ErrorNote message={error.message} />}
 
           <button type="submit" className="btn-primary w-full" disabled={busy}>
-            {busy ? "Creating account>>" : "Create account"}
+            {busy ? "Creating account..." : "Create account"}
           </button>
         </form>
 

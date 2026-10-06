@@ -229,3 +229,28 @@ export interface Paged<T> {
   items: T[];
   total: number;
 }
+
+export interface MockBlockchainProof {
+  proof_id: string;
+  reference_id: string;
+  entity_type: string;
+  event_type: string;
+  record_hash: string;
+  blockchain_status: string;
+  transaction_hash: string;
+  block_number: number;
+  network: string;
+  contract_address: string;
+  created_at: string;
+}
+
+export interface MockVerifyResult {
+  verified: boolean;
+  mock: boolean;
+  record_hash: string;
+  transaction_hash: string;
+  block_number: number;
+  network: string;
+  contract_address: string;
+  recomputed_record_hash: string;
+}

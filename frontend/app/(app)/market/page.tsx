@@ -138,7 +138,7 @@ export default function MarketPage() {
           </div>
           <input
             className="input md:max-w-xs"
-            placeholder="Search symbol or name>>"
+            placeholder="Search symbol or name..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />

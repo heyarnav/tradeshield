@@ -12,7 +12,7 @@ export function RequireAdmin({ children }: { children: ReactNode }) {
     return (
       <div className="flex items-center gap-3 py-24 text-sm text-mute">
         <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand/30 border-t-brand" />
-        Checking access>>
+        Checking access...
       </div>
     );
   }

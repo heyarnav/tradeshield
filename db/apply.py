@@ -37,6 +37,8 @@ ORDER = [
     "04_views.sql",
     "05_indexes.sql",
     "06_seed.sql",
+    "07_blockchain_proofs.sql",
+    "07_blockchain_proofs_seed.sql",
 ]
 
 # Reverse dependency order -- used only by --reset.

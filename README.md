@@ -223,6 +223,115 @@ separate cache or queue for this scale.
 
 ---
 
+## Blockchain integrity layer
+
+TradeShield's PostgreSQL database remains the **system of record** for all trading
+and application data. The blockchain layer is used only as an **immutable,
+tamper-evident audit layer** for critical events.
+
+### Current state: MOCK proof layer
+
+Blockchain integrity is currently represented by a **mock proof layer for
+demonstration**. Real cryptographic hashing and blockchain transaction integration
+are planned as a future phase.
+
+- **Not a real blockchain.** No real chain, no real transactions, no real consensus.
+- **No Web3/Hardhat/Solidity in this phase.** The architecture (proof table, admin
+  UI, verify endpoint contract) is in place so the real integration can be added
+  later without restructuring the app.
+- **Minimal metadata only.** Proof records store a reference ID, event type, mock
+  record hash, mock transaction hash, block number, network, contract address, and
+  status. They do **not** store passwords, JWTs, balances, full financial records,
+  or personal data.
+- **PostgreSQL still owns the truth.** Critical trading/security behavior is unchanged.
+
+### What is stored
+
+- **PostgreSQL (authoritative):** trading accounts, orders, executions, transactions,
+  portfolios, holdings, threat intelligence, security events, audit logs, and mock
+  blockchain proof metadata.
+- **Mock proof metadata:** reference ID, entity type, event type, record hash,
+  blockchain status, transaction hash, block number, network, contract address,
+  created at.
+
+### Architecture
+
+```
+  Next.js
+    |
+    v
+  Flask API
+    |
+    v
+  PostgreSQL  (system of record)
+    |
+    v
+  MOCK blockchain proof layer  (demonstration only)
+    |
+    v
+  Solidity smart contract      (planned future phase)
+```
+
+### Smart contract purpose (planned)
+
+A future Solidity contract (`TradeShieldAudit`) would anchor immutable proofs for
+critical events such as successful trade executions and blocked/security events. It
+would store only the minimum needed to prove integrity: an event/reference ID, event
+type, a cryptographic hash of the relevant PostgreSQL audit/event record, and a
+timestamp.
+
+### On-chain vs PostgreSQL (planned)
+
+- **On-chain:** minimal proof anchors (reference, type, record hash, timestamp).
+- **PostgreSQL:** everything else, including the authoritative application data and
+  the richer audit context.
+
+### How to run the mock layer
+
+1. Apply the database (includes the new proof table):
+
+   ```
+   python db/apply.py
+   ```
+
+2. Seed demo mock proofs:
+
+   ```
+   python db/apply.py --from 07
+   ```
+
+   Or apply the whole stack fresh:
+
+   ```
+   python db/apply.py
+   ```
+
+3. Start the backend and frontend as usual.
+
+4. Admin page: **`/admin/blockchain`** (admin login required).
+
+### Mock verification
+
+The admin page and the `GET /api/blockchain/proofs/<proof_id>/verify` endpoint
+perform a **mock** verification: they re-derive the stored mock record hash from
+the proof's own metadata and compare it to the stored value. A match means the mock
+record is internally consistent; a mismatch means the local record was altered after
+the mock proof was created. This flow is structural scaffolding for the future real
+verification endpoint.
+
+### Future phase
+
+A later phase will replace the mock layer with:
+
+- deterministic cryptographic hashing of canonical PostgreSQL audit payloads,
+- a real Ethereum-compatible local development network,
+- a Solidity `TradeShieldAudit` contract, and
+- non-blocking submission of proof hashes from the Flask backend.
+
+Until then, everything blockchain-related here is explicitly a demonstration mock.
+
+---
+
 ## API
 
 The API is a JSON REST API under `/api/...`. All authenticated routes expect a
@@ -468,31 +577,6 @@ bash backend/run_e2e.sh
 +-- frontend/                 # Next.js app
 +-- README.md                 # this file
 
-## Project structure
-
-```
-.
-+-- .env                      # environment (DATABASE_URL, JWT_SECRET, ...)
-+-- db/
-|   +-- apply.py              # applies 01..06 in order
-|   +-- verify.py             # schema / integrity / index-usage checks
-|   +-- 01_schema.sql         # tables, constraints, FKs
-|   +-- ...                   # constraints, indexes, demo data
-|   +-- demo/                 # (demo SQL if split out)
-+-- backend/
-|   +-- run.py                # Flask runner
-|   +-- app/
-|   |   +-- __init__.py       # app factory
-|   |   +-- config.py         # settings
-|   |   +-- db.py             # connection helper
-|   |   +-- errors.py         # error shapes
-|   |   +-- schemas.py        # shared DTOs
-|   |   +-- security.py       # threat screening + blocked-order handling
-|   |   +-- routes/           # auth, orders, portfolio, transactions, ...
-|   +-- tests/                # pytest suite (unit + integration + E2E)
-+-- frontend/                 # Next.js app
-+-- README.md                 # this file
-```
 
 ---
 
