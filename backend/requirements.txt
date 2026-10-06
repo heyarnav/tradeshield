@@ -1,0 +1,10 @@
+flask>=3.0.3
+flask-cors>=4.0.1
+psycopg[binary]>=3.1.18
+PyJWT>=2.8.0
+argon2-cffi>=23.1.0
+pydantic>=2.7.0
+# werkzeug is used ONLY to verify the Phase-1 seed hashes (scrypt). Every new
+# password is hashed with argon2, and legacy hashes are upgraded on login.
+werkzeug>=3.0.0
+pytest>=8.0.0
